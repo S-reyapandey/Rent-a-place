@@ -16,3 +16,15 @@ app.use((req, res, next) => {
 
 app.use(express.json({limit:'10mb'}))
 
+app.use('/', (req, res) => res.json({message: 'Welcome to out API'}));
+app.use((req, res) => res.status(404).json({success: false, message: 'Not Found'}));
+
+const startServer = async() => {
+    try{
+      
+        app.listen(port, () => console.log(`Server is running on port ${port}`
+            ))
+    }catch(err){
+
+    }
+}
