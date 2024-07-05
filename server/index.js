@@ -1,6 +1,8 @@
 import express from 'express'
 import dotenv from 'dotenv';
 import roomRouter from './routes/roomRoute.js';
+import mongoose from 'mongoose';
+import userRouter from './routes/userRoute.js';
 
 dotenv.config();
 
@@ -18,11 +20,14 @@ app.use((req, res, next) => {
 app.use(express.json({limit:'10mb'}))
 
 app.use('/room', roomRouter);
+app.use('/user', userRouter);
 app.use('/', (req, res) => res.json({message: 'Welcome to out API'}));
 app.use((req, res) => res.status(404).json({success: false, message: 'Not Found'}));
 
 const startServer = async() => {
     try{
+
+        await mongoose.connect(process.env.MONGO_DB);
       
         app.listen(port, () => console.log(`Server is running on port : ${port}`
             ))

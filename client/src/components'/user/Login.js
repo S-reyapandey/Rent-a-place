@@ -13,6 +13,7 @@ import { useValue } from "../../context/ContextProvider";
 import { Close, Send } from "@mui/icons-material";
 import PasswordField from "./PasswordField";
 import GoogleOneTapLogin from "./GoogleOneTapLogin";
+import { register } from "../../actions/user";
 
 const Login = () => {
   const {
@@ -33,15 +34,13 @@ const Login = () => {
   const handleSubmit = (e) => {
     e.preventDefault();
 
-    dispatch({ type: "START_LOADING" });
-    setTimeout(() => {
-      dispatch({ type: "END_LOADING" });
-    }, 6000);
-
+    const email = emailRef.current.value;
     const password = passwordRef.current.value;
+    //send login request if it is not register and return
+    const name = nameRef.current.value;
     const confirmPassword = confirmPasswordRef.current.value;
     if (password !== confirmPassword) {
-      dispatch({
+      return dispatch({
         type: "UPDATE_ALERT",
         payload: {
           open: true,
@@ -50,6 +49,7 @@ const Login = () => {
         },
       });
     }
+    register({name, email, password}, dispatch);
   };
 
   useEffect(() => {
