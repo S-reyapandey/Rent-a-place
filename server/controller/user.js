@@ -36,3 +36,32 @@ export const register = tryCatch(async (req, res) => {
     });
   
 });
+
+export const login = tryCatch(async (req, res) => {
+    const { email, password } = req.body;
+    
+    const emailLowercase = email.toLowerCase();
+    const existedUser = await User2.findOne({ email: emailLowercase });
+    if (!existedUser) {
+      return res.status(404).json({
+        success: false,
+        message: "User doesn't exist!",
+      });
+    }
+   const correctPassword = await bcrypt.compare(password, existedUser.password);
+   if(!correctPassword){
+    return res.status(400).json({
+        success: false,
+        message: "Password is incorrect!",
+    });
+   }
+    const { _id: id, name, photoURL } = existedUser;
+    const token = jwt.sign({ id, name, photoURL }, process.env.JWT_SECRET, {
+      expiresIn: "1h",
+    });
+    res.status(201).json({
+      success: true,
+      message: "User logged in successfully",
+      result: { id, name, email: emailLowercase, photoURL, token },
+    });
+})
