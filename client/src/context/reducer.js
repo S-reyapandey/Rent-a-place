@@ -16,7 +16,7 @@ const reducer = (state, action) => {
       return { ...state, alert: action.payload };
 
     case "UPDATE_DETAILS":
-       return { ...state, details: {...state.details, ...action.payload} };
+      return { ...state, details: { ...state.details, ...action.payload } };
 
     case "DELETE_IMAGE":
       return {
@@ -29,12 +29,20 @@ const reducer = (state, action) => {
     case "UPDATE_IMAGES":
       return { ...state, images: [...state.images, action.payload] };
 
-    case 'UPDATE_LOCATION':
-      return {...state, location: action.payload};
+    case "UPDATE_LOCATION":
+      return { ...state, location: action.payload };
 
     case "UPDATE_USER":
       localStorage.setItem("currentUser", JSON.stringify(action.payload));
       return { ...state, currentUser: action.payload };
+
+    case "RESET_ROOM":
+      return {
+        ...state,
+        images: [],
+        details: { title: "", description: "", price: 0 },
+        location: { lng: 0, lat: 0 },
+      };
 
     default:
       throw new Error("No matched action!");

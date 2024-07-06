@@ -1,5 +1,5 @@
 import { Box } from "@mui/material";
-import React from "react";
+import React, { useEffect, useRef } from "react";
 import ReactMapGL, {
   GeolocateControl,
   Marker,
@@ -13,9 +13,34 @@ const AddLocation = () => {
   const {
     state: {
       location: { lng, lat },
+      currentUser,
     },
     dispatch,
   } = useValue();
+  const mapRef = useRef();
+
+  useEffect(() => {
+    // const storedLocation = JSON.parse(localStorage.getItem(currentUser.id))?.location;
+
+    if (!lng && !lat) {
+      fetch("https://ipapi.co/json")
+        .then((response) => {
+          return response.json();
+        })
+        .then((data) => {
+          dispatch({
+            type: "UPDATE_LOCATION",
+            payload: { lng: data.longitude, lat: data.latitude },
+          });
+        });
+    }
+  }, []);
+
+  useEffect(() => {
+    if ((lng || lat) && mapRef.current) {
+      mapRef.current.flyTo({ center: [lng, lat] });
+    }
+  }, [lng, lat]);
 
   return (
     <Box
@@ -25,6 +50,7 @@ const AddLocation = () => {
       }}
     >
       <ReactMapGL
+        ref={mapRef}
         mapboxAccessToken={process.env.REACT_APP_MAPBOX_TOKEN}
         initialViewState={{
           longitude: lng,
@@ -55,7 +81,7 @@ const AddLocation = () => {
             })
           }
         />
-        <GeoCoder/>
+        <GeoCoder />
       </ReactMapGL>
     </Box>
   );
