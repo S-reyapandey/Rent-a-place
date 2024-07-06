@@ -56,9 +56,9 @@ const AddDetails = () => {
               sx={{ width: "10ch !important" }}
               variant="standard"
               InputProps={{
-                startAdornment: <InputAdornment>Rs</InputAdornment>,
+                startAdornment: <InputAdornment position="start">Rs</InputAdornment>,
               }}
-              inputProps={{type: 'number', min: 0, max: 10000}}
+              inputProps={{type: 'number', min: 1, max: 10000}}
               value={price}
               onChange={handlePriceChange}
               name="price"
