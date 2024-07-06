@@ -20,44 +20,49 @@ const Navbar = () => {
   } = useValue();
 
   return (
+    <>
     <AppBar>
-      <Container maxWidth="lg">
-        <Toolbar disableGutters>
-          <Box>
-            <IconButton color="inherit" size="large">
-              <Menu />
-            </IconButton>
-          </Box>
-          <Typography
-            variant="h6"
-            component="h1"
-            noWrap
-            sx={{ flexGrow: 1, display: { xs: "none", md: "flex" } }}
+    <Container maxWidth="lg">
+      <Toolbar disableGutters>
+        <Box>
+          <IconButton color="inherit" size="large">
+            <Menu />
+          </IconButton>
+        </Box>
+        <Typography
+          variant="h6"
+          component="h1"
+          noWrap
+          sx={{ flexGrow: 1, display: { xs: "none", md: "flex" } }}
+        >
+          You are Welcome!
+        </Typography>
+        <Typography
+          variant="h6"
+          component="h1"
+          noWrap
+          sx={{ flexGrow: 1, display: { xs: "flex", md: "none" } }}
+        >
+          Welcome !
+        </Typography>
+        {!currentUser ? (
+          <Button
+            color="inherit"
+            startIcon={<Lock />}
+            onClick={() => dispatch({ type: 'OPEN_LOGIN' })}
           >
-            You are Welcome!
-          </Typography>
-          <Typography
-            variant="h6"
-            component="h1"
-            noWrap
-            sx={{ flexGrow: 1, display: { xs: "flex", md: "none" } }}
-          >
-            Welcome !
-          </Typography>
-          {!currentUser ? (
-            <Button
-              color="inherit"
-              startIcon={<Lock />}
-              onClick={() => dispatch({ type: 'OPEN_LOGIN' })}
-            >
-              Login
-            </Button>
-          ) : (
-            <UserIcons />
-          )}
-        </Toolbar>
-      </Container>
-    </AppBar>
+            Login
+          </Button>
+        ) : (
+          <UserIcons />
+        )}
+      </Toolbar>
+    </Container>
+  </AppBar>
+  <Toolbar/>
+    
+    </>
+    
   );
 };
 

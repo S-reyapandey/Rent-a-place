@@ -37,7 +37,7 @@ const Login = () => {
     const email = emailRef.current.value;
     const password = passwordRef.current.value;
     //send login request if it is not register and return
-    if(!isRegister) return login({email, password}, dispatch);
+    if (!isRegister) return login({ email, password }, dispatch);
     const name = nameRef.current.value;
     const confirmPassword = confirmPasswordRef.current.value;
     if (password !== confirmPassword) {
@@ -50,7 +50,7 @@ const Login = () => {
         },
       });
     }
-    register({name, email, password}, dispatch);
+    register({ name, email, password }, dispatch);
   };
 
   useEffect(() => {
@@ -65,7 +65,7 @@ const Login = () => {
           sx={{
             position: "absolute",
             top: 8,
-            bottom: 8,
+            right: 8,
             color: (theme) => theme.palette.grey[500],
           }}
           onClick={handleClose}
