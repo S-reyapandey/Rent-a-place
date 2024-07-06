@@ -2,6 +2,7 @@ import User2 from "../models/user2.js";
 import bcrypt from "bcryptjs";
 import jwt from "jsonwebtoken";
 import tryCatch from "./utils/tryCatch.js";
+import Room from "../models/Room.js";
 
 export const register = tryCatch(async (req, res) => {
   const { name, email, password } = req.body;
@@ -70,6 +71,9 @@ export const updateProfile = tryCatch(async (req, res) => {
     new: true,
   });
   const { _id: id, name, photoURL } = updatedUser;
+
+
+  await Room.updateMany({uid: id}, {uName: name, uPhoto: photoURL});
 
   const token = jwt.sign(
     {

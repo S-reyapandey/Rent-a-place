@@ -19,9 +19,16 @@ export const createRoom = async (room, currentUser, dispatch, setPage) => {
         message: "The Room has been created successfully",
       },
     });
-    dispatch({type: 'RESET_ROOM'});
+    dispatch({ type: "RESET_ROOM" });
     setPage(0);
   }
 
   dispatch({ type: "END_LOADING" });
+};
+
+export const getRooms = async (dispatch) => {
+  const result = await fetchData({ url, method: "GET" }, dispatch);
+  if (result) {
+    dispatch({ type: "UPDATE_ROOMS", payload: result });
+  }
 };
