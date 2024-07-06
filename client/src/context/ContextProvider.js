@@ -20,6 +20,7 @@ const initialState = {
   priceFilter: 10000,
   addressFilter: null,
   filteredRooms: [],
+  room: null,
 };
 
 const Context = createContext(initialState);
