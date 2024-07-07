@@ -14,7 +14,9 @@ import {
   Typography,
 } from "@mui/material";
 import { Group, MapsHomeWork } from "@mui/icons-material";
-import moment from 'moment'
+import moment from "moment";
+import PieRoomsCost from "./PieRoomsCost";
+import AreaRoomsUsers from "./AreaRoomsUsers";
 
 const Main = ({ setSelectedLink, link }) => {
   const {
@@ -111,6 +113,12 @@ const Main = ({ setSelectedLink, link }) => {
             ))}
           </List>
         </Box>
+      </Paper>
+      <Paper elevation={3} sx={{ p: 2, gridColumn: "1/3" }}>
+        <PieRoomsCost />
+      </Paper>
+      <Paper elevation={3} sx={{ p: 2, gridColumn: "1/3" }}>
+        <AreaRoomsUsers />
       </Paper>
     </Box>
   );
