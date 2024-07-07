@@ -24,9 +24,18 @@ const userSchema = mongoose.Schema(
       type: String,
       default: "",
     },
+    role: {
+      type: String,
+      default: "basic",
+      enum: ["basic", "editor", "admin"],
+    },
+    active: {
+      type: Boolean,
+      default: true,
+    },
   },
   { timestamps: true }
 );
 
-const User2 = mongoose.model('user2', userSchema);
+const User2 = mongoose.model("user2", userSchema);
 export default User2;

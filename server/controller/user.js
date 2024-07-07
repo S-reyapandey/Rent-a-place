@@ -72,8 +72,7 @@ export const updateProfile = tryCatch(async (req, res) => {
   });
   const { _id: id, name, photoURL } = updatedUser;
 
-
-  await Room.updateMany({uid: id}, {uName: name, uPhoto: photoURL});
+  await Room.updateMany({ uid: id }, { uName: name, uPhoto: photoURL });
 
   const token = jwt.sign(
     {
@@ -91,4 +90,9 @@ export const updateProfile = tryCatch(async (req, res) => {
     message: "User updated successfully",
     result: { name, photoURL, token },
   });
+});
+
+export const getUsers = tryCatch(async (req, res) => {
+  const users = await User2.find().sort({ _id: -1 });
+  res.status(200).json({ success: true, result: users });
 });
