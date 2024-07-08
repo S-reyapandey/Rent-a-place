@@ -51,9 +51,9 @@ export default function PieRoomsCost() {
     });
     setCostGroups([
       { name: "Free Stay", qty: free },
-      { name: "Less than 1500", qty: lessThan1500 },
-      { name: "Between 1500 and 7500", qty: between1500And7500 },
-      { name: "More Than Rs. 7500", qty: moreThan7500 },
+      { name: "Less than Rs.1500", qty: lessThan1500 },
+      { name: "Between Rs.1500 and Rs.7500", qty: between1500And7500 },
+      { name: "More Than Rs.7500", qty: moreThan7500 },
     ]);
   }, [rooms]);
 
