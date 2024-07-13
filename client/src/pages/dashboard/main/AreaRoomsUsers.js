@@ -44,7 +44,7 @@ const AreaRoomsUsers = () => {
     for (let i = 0; i < months; i++) {
       tempData[i].rooms = 0;
     }
-    users.forEach((room) => {
+    rooms.forEach((room) => {
       for (let i = 0; i < months; i++) {
         if (moment(tempData[i].date).isSame(room?.createdAt, "month")) {
           return tempData[i].rooms++;

@@ -113,7 +113,7 @@ const Room = () => {
             }}
           >
             <Box>
-              <Typography>{`Price Per Night : `}</Typography>
+              <Typography variant="h6" component={"span"}>{`Price Per Night : `}</Typography>
               <Typography component={"span"}>
                 {room?.price === 0 ? "Free Stay" : "Rs. " + room?.price}
               </Typography>

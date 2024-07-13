@@ -71,6 +71,7 @@ const Profile = () => {
             label="Name"
             type="text"
             fullWidth
+            inputProps={{ minLength: 2 }}
             inputRef={nameRef}
             required
             defaultValue={currentUser?.name}

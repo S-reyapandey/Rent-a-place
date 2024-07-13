@@ -20,9 +20,11 @@ const AddLocation = () => {
   const mapRef = useRef();
 
   useEffect(() => {
-    // const storedLocation = JSON.parse(localStorage.getItem(currentUser.id))?.location;
+    const storedLocation = JSON.parse(
+      localStorage.getItem(currentUser.id)
+    )?.location;
 
-    if (!lng && !lat) {
+    if (!lng && !lat && !storedLocation?.lng && !storedLocation?.lat) {
       fetch("https://ipapi.co/json")
         .then((response) => {
           return response.json();
@@ -72,7 +74,7 @@ const AddLocation = () => {
         />
         <NavigationControl position="bottom-right" />
         <GeolocateControl
-          osition="top-left"
+          position="top-left"
           trackUserLocation
           onGeolocate={(e) =>
             dispatch({

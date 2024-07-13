@@ -13,6 +13,7 @@ const AddImages = () => {
     onDrop,
     accept: { 'image/*': [] },
   });
+  
   return (
     <>
       <Paper

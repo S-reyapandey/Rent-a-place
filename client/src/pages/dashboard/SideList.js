@@ -6,11 +6,18 @@ import ListItem from "@mui/material/ListItem";
 import ListItemButton from "@mui/material/ListItemButton";
 import ListItemIcon from "@mui/material/ListItemIcon";
 import ListItemText from "@mui/material/ListItemText";
-import { Avatar, Box, IconButton, styled, Tooltip, Typography } from "@mui/material";
+import {
+  Avatar,
+  Box,
+  IconButton,
+  styled,
+  Tooltip,
+  Typography,
+} from "@mui/material";
 import { useValue } from "../../context/ContextProvider";
 import { Route, Routes, useNavigate } from "react-router-dom";
 import {
-    ChevronLeft,
+  ChevronLeft,
   Dashboard,
   KingBed,
   Logout,
@@ -23,6 +30,9 @@ import Users from "./users/Users";
 import Rooms from "./rooms/Rooms";
 import Requests from "./requests/Requests";
 import Messages from "./messages/Messages";
+import { storeRoom } from "../../actions/room";
+import { logout } from "../../actions/user";
+import isAdmin from "./utils/isAdmin";
 
 const drawerWidth = 240;
 
@@ -75,7 +85,15 @@ const Drawer = styled(MuiDrawer, {
 
 const SideList = ({ open, setOpen }) => {
   const {
-    state: { currentUser },
+    state: {
+      currentUser,
+      location,
+      details,
+      images,
+      updatedRoom,
+      deletedImages,
+      addedImages,
+    },
     dispatch,
   } = useValue();
 
@@ -84,24 +102,37 @@ const SideList = ({ open, setOpen }) => {
   const navigate = useNavigate();
 
   const handleLogout = () => {
-    dispatch({ type: "UPDATE_USER", payload: null });
-    navigate("/");
+    storeRoom(
+      location,
+      details,
+      images,
+      updatedRoom,
+      deletedImages,
+      addedImages,
+      currentUser.id
+    );
+    logout(dispatch);
   };
 
   const list = useMemo(
     () => [
-      {
-        title: "Main",
-        icon: <Dashboard />,
-        link: "",
-        component: <Main {...{ setSelectedLink, link: "" }} />,
-      },
-      {
-        title: "Users",
-        icon: <PeopleAlt />,
-        link: "users",
-        component: <Users {...{ setSelectedLink, link: "users" }} />,
-      },
+      ...(isAdmin(currentUser)
+        ? [
+            {
+              title: "Main",
+              icon: <Dashboard />,
+              link: "",
+              component: <Main {...{ setSelectedLink, link: "" }} />,
+            },
+            {
+              title: "Users",
+              icon: <PeopleAlt />,
+              link: "users",
+              component: <Users {...{ setSelectedLink, link: "users" }} />,
+            },
+          ]
+        : []),
+
       {
         title: "Rooms",
         icon: <KingBed />,
@@ -121,7 +152,7 @@ const SideList = ({ open, setOpen }) => {
         component: <Messages {...{ setSelectedLink, link: "messages" }} />,
       },
     ],
-    []
+    [currentUser]
   );
 
   return (
@@ -129,7 +160,7 @@ const SideList = ({ open, setOpen }) => {
       <Drawer variant="permanent" open={open}>
         <DrawerHeader>
           <IconButton onClick={() => setOpen(false)}>
-            <ChevronLeft/>
+            <ChevronLeft />
           </IconButton>
         </DrawerHeader>
         <Divider />
@@ -190,6 +221,16 @@ const SideList = ({ open, setOpen }) => {
           {list.map((item) => (
             <Route key={item.title} path={item.link} element={item.component} />
           ))}
+          <Route
+            path="*"
+            element={
+              isAdmin(currentUser) ? (
+                <Main {...{ setSelectedLink, link: "" }} />
+              ) : (
+                <Rooms {...{ setSelectedLink, link: "rooms" }} />
+              )
+            }
+          />
         </Routes>
       </Box>
     </>

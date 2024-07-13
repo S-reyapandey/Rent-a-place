@@ -26,7 +26,7 @@ import {
           }}
         >
           {filteredRooms.map((room) => (
-            <Card key={room._id}>
+            <Card key={room._id}  sx={{ maxHeight: 350 }}>
               <ImageListItem sx={{ height: '100% !important' }}>
                 <ImageListItemBar
                   sx={{

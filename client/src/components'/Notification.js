@@ -20,7 +20,15 @@ const Notification = () => {
       onClose={handleClose}
       anchorOrigin={{ vertical: "top", horizontal: "center" }}
     >
-      <Alert onClose={handleClose} severity={alert.severity} sx={{width: '100%'}} variant="filled" elevation={6}>{alert.message}</Alert>
+      <Alert
+        onClose={handleClose}
+        severity={alert.severity}
+        sx={{ width: "100%" }}
+        variant="filled"
+        elevation={6}
+      >
+        {alert.message}
+      </Alert>
     </Snackbar>
   );
 };

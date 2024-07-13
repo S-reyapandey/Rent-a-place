@@ -1,31 +1,37 @@
 import React, { useEffect, useState } from "react";
 import { useValue } from "../../../context/ContextProvider";
-import { updateStatus } from "../../../actions/user";
+import { getUsers, updateStatus } from "../../../actions/user";
 import { Box, CircularProgress, Fab } from "@mui/material";
 import { Check, Save } from "@mui/icons-material";
 import { green } from "@mui/material/colors";
 
 const UsersActions = ({ params, rowId, setRowId }) => {
-  const { dispatch } = useValue();
+  const {
+    dispatch,
+    state: { currentUser, users },
+  } = useValue();
   const [loading, setLoading] = useState(false);
   const [success, setSuccess] = useState(false);
 
   const handleSubmit = async () => {
     setLoading(true);
-    setTimeout(async () => {
-      const { role, active, _id } = params.row;
-      const result = await updateStatus({ role, active }, _id, dispatch);
-
-      if (result) {
-        setSuccess(true);
-        setRowId(null);
-      }
-      setLoading(false);
-    }, 1500);
+    const { role, active, _id } = params.row;
+    const result = await updateStatus(
+      { role, active },
+      _id,
+      dispatch,
+      currentUser
+    );
+    if (result) {
+      setSuccess(true);
+      setRowId(null);
+      getUsers(dispatch, currentUser);
+    }
+    setLoading(false);
   };
 
-   useEffect(() => {
-      if (rowId === params.id && success) setSuccess(false);
+  useEffect(() => {
+    if (rowId === params.id && success) setSuccess(false);
   }, [rowId]);
 
   return (

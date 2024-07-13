@@ -25,4 +25,4 @@ const GeoCoder = () => {
   return null;
 }
 
-export default GeoCoder
+export default GeoCoder;
