@@ -1,4 +1,4 @@
-import User2 from "../models/user2.js";
+import User2 from '../models/User2.js'
 import bcrypt from "bcryptjs";
 import jwt from "jsonwebtoken";
 import tryCatch from "./utils/tryCatch.js";
