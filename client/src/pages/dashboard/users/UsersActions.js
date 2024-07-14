@@ -16,6 +16,8 @@ const UsersActions = ({ params, rowId, setRowId }) => {
   const handleSubmit = async () => {
     setLoading(true);
     const { role, active, _id } = params.row;
+    console.log("Updating user with ID:", _id);
+  console.log("New role:", role, "New active status:", active);
     const result = await updateStatus(
       { role, active },
       _id,

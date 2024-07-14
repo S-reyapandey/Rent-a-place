@@ -111,8 +111,5 @@ export const getUsers = tryCatch(async (req, res) => {
 export const updateStatus = tryCatch(async (req, res) => {
   const { role, active } = req.body;
   await User2.findByIdAndUpdate(req.params.userId, { role, active });
-  res.status(200).json({
-    success: true,
-    result: { _id: req.params.userId },
-  });
+  res.status(200).json({ success: true, result: { _id: req.params.userId } });
 });
