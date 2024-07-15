@@ -2,7 +2,7 @@ import { Google } from "@mui/icons-material";
 import { Button } from "@mui/material";
 import React, { useState } from "react";
 import { useValue } from "../../context/ContextProvider";
-import { jwtDecode } from 'jwt-decode';
+import { jwtDecode } from "jwt-decode";
 
 const GoogleOneTapLogin = () => {
   const { dispatch } = useValue();
@@ -13,7 +13,7 @@ const GoogleOneTapLogin = () => {
     const decodedToken = jwtDecode(token);
     const { sub: id, email, name, picture: photoURL } = decodedToken;
     dispatch({
-      type: 'UPDATE_USER',
+      type: "UPDATE_USER",
       payload: {
         id,
         email,
@@ -21,10 +21,10 @@ const GoogleOneTapLogin = () => {
         photoURL,
         token,
         google: true,
-        role: 'basic',
+        role: "basic",
       },
     });
-    dispatch({ type: 'CLOSE_LOGIN' });
+    dispatch({ type: "CLOSE_LOGIN" });
   };
   const handleGoogleLogin = () => {
     setDisabled(true);
@@ -35,7 +35,7 @@ const GoogleOneTapLogin = () => {
       });
       window.google.accounts.id.prompt((notification) => {
         if (notification.isNotDisplayed()) {
-          throw new Error('Try to clear the cookies or try again later!');
+          throw new Error("Try to clear the cookies or try again later!");
         }
         if (
           notification.isSkippedMoment() ||
@@ -46,8 +46,8 @@ const GoogleOneTapLogin = () => {
       });
     } catch (error) {
       dispatch({
-        type: 'UPDATE_ALERT',
-        payload: { open: true, severity: 'error', message: error.message },
+        type: "UPDATE_ALERT",
+        payload: { open: true, severity: "error", message: error.message },
       });
       console.log(error);
     }
@@ -66,4 +66,3 @@ const GoogleOneTapLogin = () => {
 };
 
 export default GoogleOneTapLogin;
-
