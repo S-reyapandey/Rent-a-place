@@ -12,7 +12,7 @@ const roomSchema = mongoose.Schema(
     },
     price: {
       type: Number,
-      min: 1,
+      min: 0,
       max: 10000,
       default: 0,
     },
